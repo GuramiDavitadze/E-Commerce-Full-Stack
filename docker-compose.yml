@@ -9,6 +9,7 @@ services:
      - .env
     depends_on:
      - postgres
+    restart: unless-stopped
   postgres:
     image: postgres:16-alpine
     ports:
@@ -19,6 +20,6 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
      - postgres_data:/var/lib/postgresql/data
-
+    restart: unless-stopped
 volumes:
   postgres_data:

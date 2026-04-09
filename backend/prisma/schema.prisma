@@ -24,15 +24,29 @@ model Users {
 }
 
 model Products {
-  product_id String @id @default(uuid())
-  name String
+  product_id  String   @id @default(uuid())
+  name        String
   description String
-  admin_id String
-  image String
-  price Decimal
+  admin_id    String
+  image       String
+  price       Decimal
   category_id String
-  quantity Int
-  status Boolean @default(true)
-  update_at DateTime @default(now())
+  quantity    Int
+  status      Boolean  @default(true)
+  update_at   DateTime @default(now())
+  created_at  DateTime @default(now())
+}
+
+model Category {
+  category_id   String @id @default(uuid())
+  content       String
+  category_slug String @unique
+}
+
+model Comments {
+  comment_id String   @id @default(uuid())
+  text       String
+  author_id  String
+  product_id String
   created_at DateTime @default(now())
 }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  getMeService,
   userLoginService,
   userRegisterService,
 } from "../services/user.services";
@@ -60,7 +61,14 @@ const loginController = async (req: Request, res: Response) => {
 };
 
 const getMeController = async (req: Request, res: Response) => {
-  
-}
+  try {
+    const user = req.user;
 
-export { registerController, loginController,getMeController };
+    const data = await getMeService(user?.id);
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { registerController, loginController, getMeController };

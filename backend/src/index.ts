@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.routes";
-import cookieParser = require("cookie-parser");
+import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3008;

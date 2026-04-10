@@ -72,4 +72,4 @@ const authMiddleware = async (
   }
 };
 
-export { registerMiddleware, loginMiddleware };
+export { registerMiddleware, loginMiddleware ,authMiddleware};

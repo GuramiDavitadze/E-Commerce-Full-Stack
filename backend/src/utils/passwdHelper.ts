@@ -9,5 +9,5 @@ export const comparePassword = (
   plainPassword: string,
   hashedPassword: string,
 ) => {
-  return bcrypt.compare(plainPassword, hashedPassword);
+  return  bcrypt.compare(plainPassword, hashedPassword);
 };

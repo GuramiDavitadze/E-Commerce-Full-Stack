@@ -9,7 +9,7 @@ const registerMiddleware = (
   if (!req.body) {
     return res.status(400).json({ message: "All fields are required" });
   }
-  if ( !fullname || !email || !password) {
+  if (!fullname || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
   if (fullname.trim() === "" || email.trim() === "" || password.trim() === "") {
@@ -27,4 +27,29 @@ const registerMiddleware = (
   next();
 };
 
-export { registerMiddleware };
+const loginMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.body) {
+    return res.status(400).json({
+      message: "Email and password are required",
+    });
+  }
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Email and password are required",
+    });
+  }
+  if (!isEmailValid(email) || !isPasswordValid(password)) {
+    return res.status(400).json({
+      message: "Invalid cridentials",
+    });
+  }
+  next();
+};
+
+export { registerMiddleware, loginMiddleware };

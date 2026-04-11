@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -36,8 +36,8 @@ model Product {
   name        String
   description String
   image       String?
-  price       Decimal
-  quantity    Int
+  price       Decimal  @db.Decimal(10, 2)
+  quantity    Int      @default(1)
   status      Boolean  @default(true)
   update_at   DateTime @default(now())
   created_at  DateTime @default(now())

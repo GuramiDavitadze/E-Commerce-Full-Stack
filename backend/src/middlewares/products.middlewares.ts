@@ -8,12 +8,12 @@ const productCreationMiddleware = async (
   if (!req.body) {
     res.status(400).json({ message: "Please fill all required fields!" });
   }
-  const { name, description, price, quantity, category } = req.body;
+  const { name, description, price, quantity, category_id } = req.body;
 
   if (
     !name?.trim() ||
     !description?.trim() ||
-    !category?.trim() ||
+    !category_id?.trim() ||
     price === undefined ||
     quantity === undefined
   ) {

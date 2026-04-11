@@ -1,12 +1,13 @@
 import { Router } from "express";
 import * as middleware from "../middlewares";
-import * as conntroller from "../controllers";
+import * as controller from "../controllers";
 const router = Router();
 
 router.post(
   "/",
   middleware.checkUser,
   middleware.productCreationMiddleware,
-  conntroller.productCreationController,
+  controller.productCreationController,
 );
+router.get("/", controller.getAllProductsController);
 export default router;

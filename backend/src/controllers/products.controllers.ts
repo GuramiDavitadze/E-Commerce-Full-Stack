@@ -70,8 +70,10 @@ const deleteProductByIdController = async (req: Request, res: Response) => {
     res
       .status(200)
       .json({ message: "Product Deleted Successfully"});
-  } catch (error) {
-    
+  } catch (error:any) {
+    if (error.code === "P2025") {
+      return res.status(404).json({message:`Product Not Found`})
+    }
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

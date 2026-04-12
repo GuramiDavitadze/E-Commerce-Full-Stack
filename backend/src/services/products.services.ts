@@ -67,8 +67,13 @@ const getProductsByCategoryService = async (category_slug: string) => {
     },
   });
 };
+
+const deleteProductByIdService = async (product_id: string) => {
+  
+}
 export {
   productCreationService,
   getAllProductsService,
   getProductsByCategoryService,
+  deleteProductByIdService
 };

@@ -39,5 +39,4 @@ const productCreationMiddleware = async (
   }
   next();
 };
-
 export { productCreationMiddleware };

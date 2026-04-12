@@ -59,8 +59,13 @@ const getAllProductsByCategoryController = async (
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+const deleteProductByIdController = async (req: Request, res: Response) => {
+  
+}
 export {
   productCreationController,
   getAllProductsController,
   getAllProductsByCategoryController,
+  deleteProductByIdController
 };

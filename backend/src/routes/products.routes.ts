@@ -10,5 +10,13 @@ router.post(
   controller.productCreationController,
 );
 router.get("/", controller.getAllProductsController);
-router.get("/category/:category_slug", controller.getAllProductsByCategoryController);
+router.get(
+  "/category/:category_slug",
+  controller.getAllProductsByCategoryController,
+);
+router.delete(
+  "/product/:product_id",
+  middleware.checkUser,
+  controller.deleteProductByIdController,
+);
 export default router;

@@ -69,11 +69,15 @@ const getProductsByCategoryService = async (category_slug: string) => {
 };
 
 const deleteProductByIdService = async (product_id: string) => {
-  
-}
+  return await prisma.product.delete({
+    where: {
+      id: product_id,
+    },
+  });
+};
 export {
   productCreationService,
   getAllProductsService,
   getProductsByCategoryService,
-  deleteProductByIdService
+  deleteProductByIdService,
 };

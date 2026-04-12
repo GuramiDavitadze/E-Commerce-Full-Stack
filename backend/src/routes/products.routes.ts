@@ -15,7 +15,7 @@ router.get(
   controller.getAllProductsByCategoryController,
 );
 router.delete(
-  "/product/:product_id",
+  "/:product_id",
   middleware.checkUser,
   controller.deleteProductByIdController,
 );

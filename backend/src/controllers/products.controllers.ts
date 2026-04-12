@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  deleteProductByIdService,
   getAllProductsService,
   getProductsByCategoryService,
   productCreationService,
@@ -52,8 +53,10 @@ const getAllProductsByCategoryController = async (
     const { category_slug } = req.params;
     const resp = await getProductsByCategoryService(category_slug as string);
     if (resp.length === 0) {
-      return res.status(404).json({ message: `Products on category '${category_slug}' was not found` })
-    }    
+      return res.status(404).json({
+        message: `Products on category '${category_slug}' was not found`,
+      });
+    }
     res.status(200).json({ data: resp });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
@@ -61,11 +64,20 @@ const getAllProductsByCategoryController = async (
 };
 
 const deleteProductByIdController = async (req: Request, res: Response) => {
-  
-}
+  try {
+    const { product_id } = req.params;
+    await deleteProductByIdService(product_id as string);
+    res
+      .status(200)
+      .json({ message: "Product Deleted Successfully"});
+  } catch (error) {
+    
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 export {
   productCreationController,
   getAllProductsController,
   getAllProductsByCategoryController,
-  deleteProductByIdController
+  deleteProductByIdController,
 };

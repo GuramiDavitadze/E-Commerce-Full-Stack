@@ -5,7 +5,16 @@ import {
   getCountOfProductsService,
   getProductsByCategoryService,
   productCreationService,
+  updateProductByIdService,
 } from "../services";
+type UpdateProductType = {
+  name?: string;
+  description?: string;
+  price?: number;
+  quantity?: number;
+  status?: boolean;
+  image?: string;
+};
 const productCreationController = async (req: Request, res: Response) => {
   try {
     const { name, description, price, quantity, category_id, status } =
@@ -39,13 +48,13 @@ const productCreationController = async (req: Request, res: Response) => {
 
 const getAllProductsController = async (req: Request, res: Response) => {
   try {
-    const limit = Number(req.query.limit) || 30
-    const skip = Number(req.query.skip)|| 0
+    const limit = Number(req.query.limit) || 30;
+    const skip = Number(req.query.skip) || 0;
     const [products, totalCount] = await Promise.all([
-      getAllProductsService(limit,skip),
-      getCountOfProductsService()
-    ])
-    res.status(200).json({ data: products,limit,total:totalCount,skip });
+      getAllProductsService(limit, skip),
+      getCountOfProductsService(),
+    ]);
+    res.status(200).json({ data: products, limit, total: totalCount, skip });
   } catch (error: any) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
@@ -68,26 +77,39 @@ const getAllProductsByCategoryController = async (
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
-// name        String
-//   description String
-//   image       String?
-//   price       Decimal  @db.Decimal(10, 2)
-//   quantity    Int      @default(1)
-//   status      Boolean  @default(true)
+
 const updateProductByIdController = async (req: Request, res: Response) => {
-  const {description,name,image,quantity,status,price} = req.body
-}
+  try {
+    const { description, name, image, quantity, status, price } = req.body;
+    const { product_id } = req.params;
+    const data: UpdateProductType = {};
+    if (name !== undefined) data.name = name;
+    if (image !== undefined) data.image = image;
+    if (quantity !== undefined) data.quantity = quantity;
+    if (description !== undefined) data.description = description;
+    if (status !== undefined) data.status = status;
+    if (price !== undefined) data.price = status;
+    const resp = await updateProductByIdService(data, product_id as string);
+    res
+      .status(200)
+      .json({ message: "Product updated successfully", data: resp });
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return res.status(404).json({ message: "Product Not Found" });
+    }
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 const deleteProductByIdController = async (req: Request, res: Response) => {
   try {
     const { product_id } = req.params;
     await deleteProductByIdService(product_id as string);
-    res
-      .status(200)
-      .json({ message: "Product Deleted Successfully"});
-  } catch (error:any) {
+    res.status(200).json({ message: "Product Deleted Successfully" });
+  } catch (error: any) {
     if (error.code === "P2025") {
-      return res.status(404).json({message:`Product Not Found`})
+      return res.status(404).json({ message: `Product Not Found` });
     }
     return res.status(500).json({ message: "Internal Server Error" });
   }

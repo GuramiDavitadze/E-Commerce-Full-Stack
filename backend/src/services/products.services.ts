@@ -7,6 +7,14 @@ type ProductType = {
   quantity: number;
   status: boolean;
 };
+type UpdateProductType = {
+  name?: string;
+  description?: string;
+  price?: number;
+  quantity?: number;
+  status?: boolean;
+  image?: string;
+};
 const productCreationService = async (
   data: ProductType,
   admin_id: string,
@@ -70,8 +78,14 @@ const getProductsByCategoryService = async (category_slug: string) => {
   });
 };
 
-const updateProductByIdService = async () => {
-  // return
+const updateProductByIdService = async (
+  data: UpdateProductType,
+  product_id: string,
+) => {
+  return await prisma.product.update({
+    where: { id: product_id },
+    data
+  })
 };
 
 const deleteProductByIdService = async (product_id: string) => {

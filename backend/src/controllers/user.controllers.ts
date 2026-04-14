@@ -66,5 +66,17 @@ const getMeController = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
-
-export { registerController, loginController, getMeController };
+const logoutController = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("token");
+    res.json({message:"You loggedout successfully!"})
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server error" });
+  }
+};
+export {
+  registerController,
+  loginController,
+  getMeController,
+  logoutController,
+};

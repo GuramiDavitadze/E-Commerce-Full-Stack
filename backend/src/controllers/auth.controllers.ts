@@ -62,8 +62,8 @@ const getMeController = async (req: Request, res: Response) => {
 
     const data = await UserServices.getMeService(user?.id);
     res.status(200).json(data);
-  } catch (error) {
-    console.log(error);
+  } catch  {
+    return res.status(500).json({ message: "Internal Server error" });
   }
 };
 const logoutController = async (req: Request, res: Response) => {

@@ -68,8 +68,12 @@ const getMeController = async (req: Request, res: Response) => {
 };
 const logoutController = async (req: Request, res: Response) => {
   try {
-    res.clearCookie("token");
-    res.json({message:"You loggedout successfully!"})
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.json({ message: "You loggedout successfully!" });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server error" });
   }

@@ -21,9 +21,8 @@ const updateUserController = async (req: Request, res: Response) => {
     if (isActive !== undefined) data.isActive = isActive;
     const resp = updateUserService(id,data);
     res.status(200).json({ message: "User updated successfully", data: resp });
-  } catch (error) {
+  } catch{
     return res.status(500).json({ message: "Internal Server Error" });
   }
-  res.send("Good");
 };
 export { updateUserController };

@@ -51,8 +51,8 @@ const loginController = async (req: Request, res: Response) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.status(200).json({ message: "Login successful", data });
-  } catch (error: any) {
-    console.log(error);
+  } catch  {
+    return res.status(500).json({ message: "Internal Server error" });
   }
 };
 

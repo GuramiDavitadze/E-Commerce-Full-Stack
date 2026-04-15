@@ -13,4 +13,7 @@ router.patch(
   middlewares.changePasswordMiddleware,
   controller.changePasswordController,
 );
+
+router.get("/all", middlewares.checkUser, controller.getAllUsersController);
+
 export default router;

@@ -4,6 +4,7 @@ import {
   updateUserService,
   getUserByIdService,
   updatePasswordService,
+  getAllUsersService,
 } from "../services";
 import { comparePassword, hashPassword } from "../utils/passwdHelper";
 type UpdateUserType = {
@@ -54,4 +55,18 @@ const changePasswordController = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
-export { updateUserController, changePasswordController };
+
+const getAllUsersController = async (req: Request, res: Response) => {
+  try {
+    const resp = await getAllUsersService();
+    res.status(200).json({ data: resp });
+  } catch {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export {
+  updateUserController,
+  changePasswordController,
+  getAllUsersController,
+};

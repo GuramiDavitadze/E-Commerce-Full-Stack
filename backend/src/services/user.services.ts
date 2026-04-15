@@ -31,4 +31,17 @@ const getUserByIdService = async (id: string) => {
     },
   });
 };
-export { updateUserService, getUserByIdService, updatePasswordService };
+
+const getAllUsersService = async () => {
+  return await prisma.user.findMany({
+    omit: {
+      password: true,
+    },
+  });
+};
+export {
+  updateUserService,
+  getUserByIdService,
+  updatePasswordService,
+  getAllUsersService,
+};

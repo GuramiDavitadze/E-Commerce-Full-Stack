@@ -39,9 +39,16 @@ const getAllUsersService = async () => {
     },
   });
 };
+
+const deleteUserByIdService = async (id: string) => {
+  return await prisma.user.delete({
+    where: { id },
+  });
+};
 export {
   updateUserService,
   getUserByIdService,
   updatePasswordService,
   getAllUsersService,
+  deleteUserByIdService,
 };

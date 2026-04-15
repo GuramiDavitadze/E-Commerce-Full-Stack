@@ -16,4 +16,10 @@ router.patch(
 
 router.get("/all", middlewares.checkUser, controller.getAllUsersController);
 
+router.delete(
+  "/:user_id",
+  middlewares.checkUser,
+  controller.deleteUserByIdController,
+);
+
 export default router;

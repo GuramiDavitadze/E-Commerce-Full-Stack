@@ -5,6 +5,7 @@ import {
   getUserByIdService,
   updatePasswordService,
   getAllUsersService,
+  deleteUserByIdService,
 } from "../services";
 import { comparePassword, hashPassword } from "../utils/passwdHelper";
 type UpdateUserType = {
@@ -65,8 +66,21 @@ const getAllUsersController = async (req: Request, res: Response) => {
   }
 };
 
+const deleteUserByIdController = async (req: Request, res: Response) => {
+  try {
+    const { user_id } = req.params;
+    await deleteUserByIdService(user_id as string);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error: any) {
+    if (error.code === "P2025")
+      return res.status(404).json({message:"User Could not find"})
+    return res.status(500).json({message:"Internal Server Error"})
+  }
+};
+
 export {
   updateUserController,
   changePasswordController,
   getAllUsersController,
+  deleteUserByIdController
 };

@@ -30,7 +30,7 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
   }
   const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
   if (decoded.role !== "CUSTOMER") {
-    return res.status(401).json({ message: "Unauthorized, You are admin" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
   next();
 };

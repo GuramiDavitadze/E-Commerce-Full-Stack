@@ -18,4 +18,15 @@ const createOrderService = async (user_id: string, orders: OrderType[]) => {
   });
 };
 
-export { createOrderService };
+const getAllOrdersService = async (user_id:string) => {
+  return await prisma.order.findMany({
+    where: {
+      user_id
+    },
+    include: {
+      order_items:true
+    }
+  })
+}
+
+export { createOrderService,getAllOrdersService };

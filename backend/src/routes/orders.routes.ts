@@ -10,5 +10,5 @@ router.post(
   middlewares.transformData,
   controllers.createOrderController,
 );
-
+router.get("/", middlewares.checkAuth, controllers.getAllOrdersController);
 export default router;

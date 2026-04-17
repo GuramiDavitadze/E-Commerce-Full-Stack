@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  createManyProductsService,
   deleteProductByIdService,
   getAllProductsService,
   getCountOfProductsService,
@@ -47,6 +48,30 @@ const productCreationController = async (req: Request, res: Response) => {
   }
 };
 
+type ProductType = {
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  status: boolean;
+  category_id: string;
+};
+const createManyProdcutsController = async (req: Request, res: Response) => {
+  try {
+    let products: ProductType[] = Object.values(req.body);
+
+    const { user } = req;
+    const admin_id = user?.id;
+
+    const resp = await createManyProductsService(products, admin_id);
+    res
+      .status(201)
+      .json({ message: "Products Created Successfully", data: resp });
+  } catch (error: any) {
+
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 const getAllProductsController = async (req: Request, res: Response) => {
   try {
     const limit = Number(req.query.limit) || 30;
@@ -59,7 +84,7 @@ const getAllProductsController = async (req: Request, res: Response) => {
     res.status(200).json({ data: products, limit, total: totalCount, skip });
   } catch (error: any) {
     console.log(error);
-    
+
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -151,4 +176,5 @@ export {
   updateProductByIdController,
   deleteProductByIdController,
   searchProductController,
+  createManyProdcutsController,
 };

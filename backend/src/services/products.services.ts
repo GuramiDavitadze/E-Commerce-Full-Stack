@@ -1,12 +1,15 @@
 import prisma from "../config/prisma";
-
-type ProductType = {
+type ProductsType = {
   name: string;
   description: string;
   price: number;
   quantity: number;
   status: boolean;
+  category_id: string;
 };
+
+type ProductType = Omit<ProductsType, "category_id">;
+
 type UpdateProductType = {
   name?: string;
   description?: string;
@@ -32,6 +35,18 @@ const productCreationService = async (
         },
       },
     },
+  });
+};
+
+const createManyProductsService = async (
+  products: ProductsType[],
+  admin_id: string,
+) => {
+  return await prisma.product.createMany({
+    data: products.map((product) => ({
+      ...product,
+      admin_id,
+    })),
   });
 };
 
@@ -131,4 +146,5 @@ export {
   getCountOfProductsService,
   updateProductByIdService,
   searchProductService,
+  createManyProductsService,
 };

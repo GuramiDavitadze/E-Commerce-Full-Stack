@@ -9,6 +9,9 @@ router.post(
   middleware.productCreationMiddleware,
   controller.productCreationController,
 );
+
+router.post("/many",middleware.checkUser,controller.createManyProdcutsController)
+
 router.get(
   "/",
   middleware.productsFilterMiddleware,

@@ -67,8 +67,7 @@ const createManyProdcutsController = async (req: Request, res: Response) => {
     res
       .status(201)
       .json({ message: "Products Created Successfully", data: resp });
-  } catch (error: any) {
-
+  } catch{
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -83,8 +82,6 @@ const getAllProductsController = async (req: Request, res: Response) => {
     ]);
     res.status(200).json({ data: products, limit, total: totalCount, skip });
   } catch (error: any) {
-    console.log(error);
-
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

@@ -13,4 +13,11 @@ router.get(
   "/product/:product_id",
   controllers.getAllCommentsByProductIdController,
 );
+
+router.patch(
+  "/:comment_id",
+  middlewares.checkAuth,
+  middlewares.createCommentMiddleware,
+  controllers.changeCommentTextController,
+);
 export default router;

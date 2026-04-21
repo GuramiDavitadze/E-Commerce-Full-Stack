@@ -38,4 +38,37 @@ const getAllCommentsByProductIdService = async (product_id: string) => {
   });
 };
 
-export { createCommentService, getAllCommentsByProductIdService };
+const changeCommentTextService = async (
+  user_id: string,
+  comment_id: string,
+  text: string,
+) => {
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id: comment_id,
+    },
+    select: { author_id: true },
+  });
+  if (comment?.author_id !== user_id) {
+    const newError = new Error(
+      "You don't have permission to change the comment!",
+    );
+    newError.name = "Unauthorized";
+    throw newError;
+  }
+  return await prisma.comment.update({
+    where: {
+      id: comment_id,
+      author_id: user_id,
+    },
+    data: {
+      text,
+    },
+  });
+};
+
+export {
+  createCommentService,
+  getAllCommentsByProductIdService,
+  changeCommentTextService,
+};

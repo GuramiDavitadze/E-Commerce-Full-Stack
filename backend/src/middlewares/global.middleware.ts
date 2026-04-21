@@ -23,6 +23,7 @@ const checkUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
+
   const token = req.cookies.token;
 
   if (!token) {

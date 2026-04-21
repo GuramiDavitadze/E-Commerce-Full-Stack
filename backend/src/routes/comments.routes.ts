@@ -20,4 +20,10 @@ router.patch(
   middlewares.createCommentMiddleware,
   controllers.changeCommentTextController,
 );
+
+router.delete(
+  "/:comment_id",
+  middlewares.checkAuth,
+  controllers.deleteCommentByIdController,
+);
 export default router;

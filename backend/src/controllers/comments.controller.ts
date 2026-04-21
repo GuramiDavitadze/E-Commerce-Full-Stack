@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   changeCommentTextService,
   createCommentService,
+  deleteCommentByIdService,
   getAllCommentsByProductIdService,
 } from "../services";
 const createCommentController = async (req: Request, res: Response) => {
@@ -52,8 +53,26 @@ const changeCommentTextController = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+const deleteCommentByIdController = async (req: Request, res: Response) => {
+  try {
+    const id = req.user?.id;
+    const { comment_id } = req.params;
+    await deleteCommentByIdService(id, comment_id as string);
+    res.status(200).json({ message: "Comment Deleted Successfully!" });
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return res.status(404).json({ message: "Comment Not Found" });
+    }
+    if (error.name === "Unauthorized") {
+      return res.status(401).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 export {
   createCommentController,
   getAllCommentsByProductIdController,
   changeCommentTextController,
+  deleteCommentByIdController,
 };

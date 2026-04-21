@@ -9,5 +9,8 @@ router.post(
   middlewares.createCommentMiddleware,
   controllers.createCommentController,
 );
-
+router.get(
+  "/product/:product_id",
+  controllers.getAllCommentsByProductIdController,
+);
 export default router;

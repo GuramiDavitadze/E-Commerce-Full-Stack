@@ -30,4 +30,12 @@ const createCommentService = async (
   });
 };
 
-export { createCommentService };
+const getAllCommentsByProductIdService = async (product_id: string) => {
+  return await prisma.comment.findMany({
+    where: {
+      product_id,
+    },
+  });
+};
+
+export { createCommentService, getAllCommentsByProductIdService };

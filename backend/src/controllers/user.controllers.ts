@@ -26,13 +26,9 @@ const getUserProfileController = async (req: Request, res: Response) => {
 };
 
 const updateUserController = async (req: Request, res: Response) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    const { id } = decoded;
+    const id = req.user!.id;
     const { fullname, image, isActive } = req.body;
     const data: UpdateUserType = {};
     if (fullname !== undefined) data.fullname = fullname;
@@ -45,13 +41,9 @@ const updateUserController = async (req: Request, res: Response) => {
   }
 };
 const changePasswordController = async (req: Request, res: Response) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-    const { id } = decoded;
+    const id = req.user!.id
     const { password, newPassword } = req.body;
     const user = await getUserByIdService(id);
     const isPasswordRight = await comparePassword(password, user?.password!);

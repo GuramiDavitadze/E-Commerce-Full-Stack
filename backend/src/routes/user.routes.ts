@@ -3,15 +3,17 @@ import * as middlewares from "../middlewares";
 import * as controller from "../controllers";
 const router = Router();
 
-router.get("/profile",middlewares.authMiddleware,)
+router.get("/profile", middlewares.authMiddleware);
 
 router.patch(
   "/profile",
+  middlewares.authMiddleware,
   middlewares.userUpdateMiddleware,
   controller.updateUserController,
 );
 router.patch(
   "/password",
+  middlewares.authMiddleware,
   middlewares.changePasswordMiddleware,
   controller.changePasswordController,
 );

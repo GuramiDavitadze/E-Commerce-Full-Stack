@@ -23,7 +23,7 @@ const createOrderController = async (req: Request, res: Response) => {
 const getAllOrdersController = async (req: Request, res: Response) => {
   try {
     const user = req.user;
-    const user_id = user?.id;
+    const user_id = user!.id;
     const resp = await getAllOrdersService(user_id);
     res.status(200).json({ data: resp });
   } catch {

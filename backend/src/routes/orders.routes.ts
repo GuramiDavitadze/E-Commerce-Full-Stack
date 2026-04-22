@@ -15,6 +15,11 @@ router.get(
   middlewares.checkAuth,
   controllers.getAllOrdersController,
 );
+router.get(
+  "/:order_id",
+  middlewares.checkAuth,
+  controllers.getSingleOrderController,
+);
 router.patch(
   "/:order_id",
   middlewares.checkAuth,

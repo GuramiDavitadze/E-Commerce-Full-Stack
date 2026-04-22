@@ -46,6 +46,41 @@ const getAllOrdersForAdminService = async () => {
   });
 };
 
+const getSingleOrderService = async (order_id: string, user_id: string) => {
+  const order = await prisma.order.findUnique({
+    where: { id: order_id },
+    select: {
+      user_id: true,
+    },
+  });
+  if (!order) {
+    const newError: any = new Error("Order Not Found");
+    newError.code = 404;
+    throw newError;
+  }
+  if (user_id !== order!.user_id) {
+    const newError: any = new Error(
+      "You don't have permission to access this data",
+    );
+    newError.code = 403;
+    throw newError;
+  }
+  return await prisma.order.findUnique({
+    where: { id: order_id },
+    include: {
+      user: {
+        select: {
+          fullname: true,
+          id: true,
+          image: true,
+        },
+      },
+
+      order_items: true,
+    },
+  });
+};
+
 const nextStatus: Record<string, OrderStatus> = {
   PENDING: "PROCESSING",
   PROCESSING: "SHIPPED",
@@ -115,4 +150,5 @@ export {
   getAllOrdersForAdminService,
   changeOrderStatusService,
   cancelOrderService,
+  getSingleOrderService,
 };

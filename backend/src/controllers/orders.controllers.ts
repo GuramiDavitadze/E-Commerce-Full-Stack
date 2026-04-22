@@ -5,6 +5,7 @@ import {
   createOrderService,
   getAllOrdersForAdminService,
   getAllOrdersService,
+  getSingleOrderService,
 } from "../services";
 const createOrderController = async (req: Request, res: Response) => {
   try {
@@ -40,7 +41,19 @@ const getAllOrdersForAdminController = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
+const getSingleOrderController = async (req: Request, res: Response) => {
+  try {
+    const { order_id } = req.params!;
+    const { id } = req.user!;
+    const resp = await getSingleOrderService(order_id as string, id);
+    res.status(200).json({ data: resp });
+  } catch (error: any) {
+    if ([404, 403].includes(error.code)) {
+      return res.status(error.code).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 const cancelOrderController = async (req: Request, res: Response) => {
   try {
     const { order_id } = req.params;
@@ -54,7 +67,7 @@ const cancelOrderController = async (req: Request, res: Response) => {
       return res.status(error.code).json({ message: error.message });
     }
     console.log(error);
-    
+
     return res.status(500).json({ meesage: "Internal Server Error" });
   }
 };
@@ -83,4 +96,5 @@ export {
   getAllOrdersForAdminController,
   changeOrderStatusController,
   cancelOrderController,
+  getSingleOrderController,
 };

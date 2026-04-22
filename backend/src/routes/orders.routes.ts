@@ -10,11 +10,24 @@ router.post(
   middlewares.transformData,
   controllers.createOrderController,
 );
-router.get("/my-orders", middlewares.checkAuth, controllers.getAllOrdersController);
+router.get(
+  "/my-orders",
+  middlewares.checkAuth,
+  controllers.getAllOrdersController,
+);
+router.patch(
+  "/:order_id",
+  middlewares.checkAuth,
+  controllers.cancelOrderController,
+);
 router.get(
   "/admin",
   middlewares.checkUser,
   controllers.getAllOrdersForAdminController,
 );
-router.patch("/:order_id/status",middlewares.checkUser,controllers.changeOrderStatusController)
+router.patch(
+  "/:order_id/status",
+  middlewares.checkUser,
+  controllers.changeOrderStatusController,
+);
 export default router;

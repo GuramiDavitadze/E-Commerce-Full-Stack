@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  cancelOrderService,
   changeOrderStatusService,
   createOrderService,
   getAllOrdersForAdminService,
@@ -40,6 +41,28 @@ const getAllOrdersForAdminController = async (req: Request, res: Response) => {
   }
 };
 
+const cancelOrderController = async (req: Request, res: Response) => {
+  try {
+    const { order_id } = req.params;
+    const { id } = req!.user!;
+    const resp = await cancelOrderService(order_id as string, id);
+    res
+      .status(200)
+      .json({ message: "Order Cancelled succesffully!", data: resp });
+  } catch (error: any) {
+    if (error.code === "P2025")
+      return res.status(404).json({ message: "Order Not Found" });
+    if (error.name === "Conflict" || error.name === "Forbidden") {
+      const status_code = error.name === "Conflict" ? 409 : 403;
+      return res.status(status_code).json({ message: error.message });
+    }
+    if ([409, 404, 403].includes(error.status)) {
+      return res.status(error.status).json({ message: error.message });
+    }
+    return res.status(500).json({ meesage: "Internal Server Error" });
+  }
+};
+
 const changeOrderStatusController = async (req: Request, res: Response) => {
   try {
     const { order_id } = req.params;
@@ -63,4 +86,5 @@ export {
   getAllOrdersController,
   getAllOrdersForAdminController,
   changeOrderStatusController,
+  cancelOrderController,
 };

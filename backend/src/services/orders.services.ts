@@ -25,7 +25,11 @@ const getAllOrdersService = async (user_id: string) => {
       user_id,
     },
     include: {
-      order_items: true,
+      order_items: {
+        omit: {
+          order_id: true,
+        },
+      },
     },
   });
 };
@@ -70,4 +74,43 @@ const changeOrderStatusService = async (order_id: string) => {
     },
   });
 };
-export { createOrderService, getAllOrdersService, getAllOrdersForAdminService,changeOrderStatusService };
+
+const cancelOrderService = async (order_id: string, user_id: string) => {
+  const order = await prisma.order.findUnique({
+    where: { id: order_id },
+  });
+  if (!order) {
+    const newError: any = new Error("Order Not Found");
+    newError.code = 404;
+    throw newError;
+  }
+  if (order!.user_id !== user_id) {
+    const newError = new Error("You don't have permission to cancel order");
+    newError.name = "Forbidden";
+    throw newError;
+  }
+  if (order!.status === "CANCELLED") {
+    const newError: any = new Error("Order is already cancelled");
+    newError.status = 409;
+    throw newError;
+  }
+  if (order!.status !== "PENDING") {
+    const newError = new Error("Order cannot be cancelled at this stage");
+    newError.name = "Conflict";
+    throw newError;
+  }
+
+  return await prisma.order.update({
+    where: { id: order_id },
+    data: {
+      status: "CANCELLED",
+    },
+  });
+};
+export {
+  createOrderService,
+  getAllOrdersService,
+  getAllOrdersForAdminService,
+  changeOrderStatusService,
+  cancelOrderService,
+};

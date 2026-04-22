@@ -70,7 +70,10 @@ const getAllUsersController = async (req: Request, res: Response) => {
 const getUserByIdController = async (req: Request, res: Response) => {
   try {
     const { user_id } = req.params;
-    const resp = await getUserByIdService(user_id as string);
+    const resp = await getUserProfileService(user_id as string);
+    if (!resp) {
+      return res.status(404).json({message:"User Not Found"})
+    }
     res.status(200).json({ data: resp });
   } catch (error: any) {
     return res.status(500).json({ message: "Internal Server Error" });

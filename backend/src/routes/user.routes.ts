@@ -3,7 +3,11 @@ import * as middlewares from "../middlewares";
 import * as controller from "../controllers";
 const router = Router();
 
-router.get("/profile", middlewares.authMiddleware);
+router.get(
+  "/profile",
+  middlewares.authMiddleware,
+  controller.getUserProfileController,
+);
 
 router.patch(
   "/profile",
@@ -20,12 +24,15 @@ router.patch(
 
 router.get("/all", middlewares.checkUser, controller.getAllUsersController);
 
-router.get("/:user_id",middlewares.checkUser,controller.getUserByIdController)
+router.get(
+  "/:user_id",
+  middlewares.checkUser,
+  controller.getUserByIdController,
+);
 router.delete(
   "/:user_id",
   middlewares.checkUser,
   controller.deleteUserByIdController,
 );
-
 
 export default router;

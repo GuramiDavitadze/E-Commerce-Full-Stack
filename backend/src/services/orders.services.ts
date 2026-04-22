@@ -85,18 +85,20 @@ const cancelOrderService = async (order_id: string, user_id: string) => {
     throw newError;
   }
   if (order!.user_id !== user_id) {
-    const newError = new Error("You don't have permission to cancel order");
-    newError.name = "Forbidden";
+    const newError: any = new Error(
+      "You don't have permission to cancel order",
+    );
+    newError.code = 403;
     throw newError;
   }
   if (order!.status === "CANCELLED") {
     const newError: any = new Error("Order is already cancelled");
-    newError.status = 409;
+    newError.code = 409;
     throw newError;
   }
   if (order!.status !== "PENDING") {
-    const newError = new Error("Order cannot be cancelled at this stage");
-    newError.name = "Conflict";
+    const newError: any = new Error("Order cannot be cancelled at this stage");
+    newError.code = 409;
     throw newError;
   }
 

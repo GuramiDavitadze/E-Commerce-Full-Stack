@@ -50,15 +50,11 @@ const cancelOrderController = async (req: Request, res: Response) => {
       .status(200)
       .json({ message: "Order Cancelled succesffully!", data: resp });
   } catch (error: any) {
-    if (error.code === "P2025")
-      return res.status(404).json({ message: "Order Not Found" });
-    if (error.name === "Conflict" || error.name === "Forbidden") {
-      const status_code = error.name === "Conflict" ? 409 : 403;
-      return res.status(status_code).json({ message: error.message });
+    if ([409, 404, 403].includes(error.code)) {
+      return res.status(error.code).json({ message: error.message });
     }
-    if ([409, 404, 403].includes(error.status)) {
-      return res.status(error.status).json({ message: error.message });
-    }
+    console.log(error);
+    
     return res.status(500).json({ meesage: "Internal Server Error" });
   }
 };

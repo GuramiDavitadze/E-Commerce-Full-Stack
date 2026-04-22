@@ -4,6 +4,13 @@ type UpdateUserType = {
   image?: string;
   isActive?: boolean;
 };
+
+const getUserProfileService = async (user_id: string) => {
+  return await prisma.user.findUnique({
+    where: { id: user_id },
+    omit: { password: true },
+  });
+};
 const updateUserService = async (id: string, data: UpdateUserType) => {
   return await prisma.user.update({
     where: { id },
@@ -46,6 +53,7 @@ const deleteUserByIdService = async (id: string) => {
   });
 };
 export {
+  getUserProfileService,
   updateUserService,
   getUserByIdService,
   updatePasswordService,

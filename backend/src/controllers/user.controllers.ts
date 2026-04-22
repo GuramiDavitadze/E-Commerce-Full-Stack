@@ -6,6 +6,7 @@ import {
   updatePasswordService,
   getAllUsersService,
   deleteUserByIdService,
+  getUserProfileService,
 } from "../services";
 import { comparePassword, hashPassword } from "../utils/passwdHelper";
 type UpdateUserType = {
@@ -13,6 +14,17 @@ type UpdateUserType = {
   image?: string;
   isActive?: boolean;
 };
+
+const getUserProfileController = async (req: Request, res: Response) => {
+  try {
+    const id = req.user!.id;
+    const resp = await getUserProfileService(id);
+    res.status(200).json({ data: resp });
+  } catch {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const updateUserController = async (req: Request, res: Response) => {
   const token = req.cookies.token;
   if (!token) {
@@ -73,14 +85,15 @@ const deleteUserByIdController = async (req: Request, res: Response) => {
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error: any) {
     if (error.code === "P2025")
-      return res.status(404).json({message:"User Could not find"})
-    return res.status(500).json({message:"Internal Server Error"})
+      return res.status(404).json({ message: "User Could not find" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 export {
+  getUserProfileController,
   updateUserController,
   changePasswordController,
   getAllUsersController,
-  deleteUserByIdController
+  deleteUserByIdController,
 };

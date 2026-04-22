@@ -3,6 +3,8 @@ import * as middlewares from "../middlewares";
 import * as controller from "../controllers";
 const router = Router();
 
+router.get("/profile",middlewares.authMiddleware,)
+
 router.patch(
   "/profile",
   middlewares.userUpdateMiddleware,

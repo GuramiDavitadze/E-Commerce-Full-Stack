@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import rateLimit from "express-rate-limit";
 const checkUser = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token;
   if (!token) {
@@ -23,7 +24,6 @@ const checkUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
-
   const token = req.cookies.token;
 
   if (!token) {
@@ -37,4 +37,14 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { checkUser, checkAuth };
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { message: "Too many requests, please try again later" },
+});
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { message: "Too many requests, please try again later" },
+});
+export { checkUser, checkAuth, generalLimiter, authLimiter };

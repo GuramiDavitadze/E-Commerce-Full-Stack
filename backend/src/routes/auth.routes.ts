@@ -1,24 +1,23 @@
 import express from "express";
-import * as UserControler from "../controllers";
-import * as UserMiddleware from "../middlewares";
+import * as controler from "../controllers";
+import * as middleware from "../middlewares";
 
 const router = express.Router();
 
 router.post(
   "/register",
-  UserMiddleware.registerMiddleware,
-  UserControler.registerController,
+  middleware.authLimiter,
+  middleware.registerMiddleware,
+  controler.registerController,
 );
 
 router.post(
   "/login",
-  UserMiddleware.loginMiddleware,
-  UserControler.loginController,
+  middleware.authLimiter,
+  middleware.loginMiddleware,
+  controler.loginController,
 );
 
-router.get("/me", UserMiddleware.authMiddleware, UserControler.getMeController);
-router.post(
-  "/logout",
-  UserControler.logoutController,
-);
+router.get("/me", middleware.authMiddleware, controler.getMeController);
+router.post("/logout", controler.logoutController);
 export default router;

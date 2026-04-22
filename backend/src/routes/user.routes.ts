@@ -20,10 +20,12 @@ router.patch(
 
 router.get("/all", middlewares.checkUser, controller.getAllUsersController);
 
+router.get("/:user_id",middlewares.checkUser,controller.getUserByIdController)
 router.delete(
   "/:user_id",
   middlewares.checkUser,
   controller.deleteUserByIdController,
 );
+
 
 export default router;

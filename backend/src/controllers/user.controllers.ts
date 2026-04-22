@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
 import {
   updateUserService,
   getUserByIdService,
@@ -26,7 +25,6 @@ const getUserProfileController = async (req: Request, res: Response) => {
 };
 
 const updateUserController = async (req: Request, res: Response) => {
-
   try {
     const id = req.user!.id;
     const { fullname, image, isActive } = req.body;
@@ -41,9 +39,8 @@ const updateUserController = async (req: Request, res: Response) => {
   }
 };
 const changePasswordController = async (req: Request, res: Response) => {
-
   try {
-    const id = req.user!.id
+    const id = req.user!.id;
     const { password, newPassword } = req.body;
     const user = await getUserByIdService(id);
     const isPasswordRight = await comparePassword(password, user?.password!);
@@ -70,6 +67,16 @@ const getAllUsersController = async (req: Request, res: Response) => {
   }
 };
 
+const getUserByIdController = async (req: Request, res: Response) => {
+  try {
+    const { user_id } = req.params;
+    const resp = await getUserByIdService(user_id as string);
+    res.status(200).json({ data: resp });
+  } catch (error: any) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const deleteUserByIdController = async (req: Request, res: Response) => {
   try {
     const { user_id } = req.params;
@@ -87,5 +94,6 @@ export {
   updateUserController,
   changePasswordController,
   getAllUsersController,
+  getUserByIdController,
   deleteUserByIdController,
 };

@@ -38,7 +38,7 @@ const getUserByIdService = async (id: string) => {
     },
   });
 };
-
+  
 const getAllUsersService = async () => {
   return await prisma.user.findMany({
     omit: {

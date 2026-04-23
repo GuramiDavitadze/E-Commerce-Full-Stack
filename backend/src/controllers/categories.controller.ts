@@ -8,7 +8,7 @@ import {
 import { CategoryType } from "../types/category.types";
 const categoryCreationController = async (req: Request, res: Response) => {
   try {
-    const { content } = req.body;
+    const content = req.body.content as string;
     const category_slug = content.toLowerCase().trim().split(" ").join("_");
     const data = {
       content,

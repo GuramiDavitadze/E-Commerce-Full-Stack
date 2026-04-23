@@ -37,6 +37,21 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+const checkAPISecretKey = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const apiKey = req.headers["secret-api-key"];
+  if (!apiKey) {
+    return res.status(401).json({ message: "API key is required" });
+  }
+  if (apiKey !== process.env.API_KEY) {
+    return res.status(401).json({ message: "API key is invalid" });
+  }
+  next();
+};
+
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -47,4 +62,4 @@ const authLimiter = rateLimit({
   max: 10,
   message: { message: "Too many requests, please try again later" },
 });
-export { checkUser, checkAuth, generalLimiter, authLimiter };
+export { checkUser, checkAuth, checkAPISecretKey, generalLimiter, authLimiter };

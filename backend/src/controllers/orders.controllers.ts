@@ -66,8 +66,6 @@ const cancelOrderController = async (req: Request, res: Response) => {
     if ([409, 404, 403].includes(error.code)) {
       return res.status(error.code).json({ message: error.message });
     }
-    console.log(error);
-
     return res.status(500).json({ meesage: "Internal Server Error" });
   }
 };

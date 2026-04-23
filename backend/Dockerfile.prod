@@ -16,6 +16,5 @@ RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/generated ./generated
 COPY prisma ./prisma
-COPY prisma.config.ts ./
 EXPOSE 3008
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]

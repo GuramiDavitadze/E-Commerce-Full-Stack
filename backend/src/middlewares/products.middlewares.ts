@@ -6,7 +6,9 @@ const productCreationMiddleware = async (
   next: NextFunction,
 ) => {
   if (!req.body) {
-    return res.status(400).json({ message: "Please fill all required fields!" });
+    return res
+      .status(400)
+      .json({ message: "Please fill all required fields!" });
   }
   const { name, description, price, quantity, category_id } = req.body;
 
@@ -100,22 +102,17 @@ const productsFilterMiddleware = async (
   next: NextFunction,
 ) => {
   const sortBy = req.query.sortBy as string;
-  const order = (req.query.order as string)?.toLowerCase() ?? "asc";
+  const order: string = (req.query.order as string)?.toLowerCase() ?? "asc";
   if (!sortBy) {
     next();
   }
   if (!order) {
     next();
   }
-  if (sortBy.toLowerCase() !== "price") {
+  if ((sortBy as string).toLowerCase() !== "price") {
     return res
       .status(400)
       .json({ message: "At this time we only have price sorting" });
-  }
-  if (order.toLowerCase() !== "asc" && order.toLowerCase() !== "desc") {
-    return res
-      .status(400)
-      .json({ message: "order has only 2 possible values. asc || desc" });
   }
   next();
 };

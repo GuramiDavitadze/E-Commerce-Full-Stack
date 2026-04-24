@@ -17,6 +17,17 @@ const options: swaggerJSDoc.Options = {
         description: "Production server",
       },
     ],
+    components: {
+      securitySchemes: {
+        apiKey: {
+          type: "apiKey",
+          in: "header",
+          name: "secret-api-key",
+        },
+      },
+    },
+
+    security: [{ apiKey: [] }],
   },
   apis: ["./src/routes/*.ts"],
 };

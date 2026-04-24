@@ -9,9 +9,9 @@ const options: swaggerJSDoc.Options = {
       description: "E-Commerce REST API documentation",
     },
     servers: [
-      { user: "http://localhost:3008", desciption: "Development server" },
+      { url: "http://localhost:3008", desciption: "Development server" },
       {
-        user: "https://e-commerce-full-stack-production-2d56.up.railway.app",
+        url: "https://e-commerce-full-stack-production-2d56.up.railway.app",
         desciption: "Production server server",
       },
     ],

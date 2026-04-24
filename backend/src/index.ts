@@ -7,7 +7,7 @@ import { rootRouter } from "./routes";
 import { checkAPISecretKey, generalLimiter } from "./middlewares";
 import { Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./config/swagger";
+import { swaggerDocumentation } from "./config/swagger";
 dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 3008;
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(generalLimiter);
 app.use("/api", checkAPISecretKey, rootRouter);
-app.use("/rest-api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
 app.use("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
 });

@@ -20,7 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(generalLimiter);
 setupSwagger(app);
-app.use("/api", checkAPISecretKey, rootRouter);
+//  checkAPISecretKey,
+app.use("/api", rootRouter);
 app.use("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
 });

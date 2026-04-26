@@ -60,8 +60,11 @@ const loginController = async (req: Request, res: Response) => {
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({ message: "Login successful", data });
-  } catch {
+    res.status(200).json({ message: "Login successfully", data });
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return res.status(404).json({ message: "Email does not exist" });
+    }
     return res.status(500).json({ message: "Internal Server error" });
   }
 };
@@ -84,7 +87,7 @@ const logoutController = async (req: Request, res: Response) => {
       sameSite: "strict",
     });
     res.json({ message: "You loggedout successfully!" });
-  } catch (error) {
+  } catch {
     return res.status(500).json({ message: "Internal Server error" });
   }
 };

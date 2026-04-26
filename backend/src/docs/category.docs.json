@@ -56,7 +56,7 @@
     },
     "api/category/{id}": {
         "patch": {
-            "summary": "Update Single Category",
+            "summary": "Update Single Category By Id",
             "tags": [
                 "Category"
             ],
@@ -85,6 +85,26 @@
                 },
                 "500": {
                     "description": "Internal Server Error!"
+                }
+            }
+        },
+        "delete":{
+            "summary":"Delete Category By Id",
+            "tags":[
+                "Category"
+            ],
+            "responses":{
+                "200":{
+                    "description":"Category Deleted Successfully"
+                },
+                "400":{
+                    "description":"There are products on this category"
+                },
+                "404":{
+                    "description":"Category Not Found"
+                },
+                "500":{
+                    "description":"Internal Server Error"
                 }
             }
         }

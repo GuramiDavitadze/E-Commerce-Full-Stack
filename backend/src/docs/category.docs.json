@@ -83,28 +83,31 @@
                 "400": {
                     "description": "Validation Error"
                 },
+                "404": {
+                    "description": "Category Not Found"
+                },
                 "500": {
                     "description": "Internal Server Error!"
                 }
             }
         },
-        "delete":{
-            "summary":"Delete Category By Id",
-            "tags":[
+        "delete": {
+            "summary": "Delete Category By Id",
+            "tags": [
                 "Category"
             ],
-            "responses":{
-                "200":{
-                    "description":"Category Deleted Successfully"
+            "responses": {
+                "200": {
+                    "description": "Category Deleted Successfully"
                 },
-                "400":{
-                    "description":"There are products on this category"
+                "400": {
+                    "description": "There are products on this category"
                 },
-                "404":{
-                    "description":"Category Not Found"
+                "404": {
+                    "description": "Category Not Found"
                 },
-                "500":{
-                    "description":"Internal Server Error"
+                "500": {
+                    "description": "Internal Server Error"
                 }
             }
         }

@@ -16,7 +16,8 @@
                             ],
                             "properties": {
                                 "content": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "example": "Phone Accessories"
                                 }
                             }
                         }
@@ -49,6 +50,41 @@
                 },
                 "500": {
                     "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "api/category/{id}": {
+        "patch": {
+            "summary": "Update Single Category",
+            "tags": [
+                "Category"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "content"
+                            ],
+                            "proeprties": {
+                                "content": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Category Updated Successfully"
+                },
+                "400": {
+                    "description": "Validation Error"
+                },
+                "500": {
+                    "description": "Internal Server Error!"
                 }
             }
         }

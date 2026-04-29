@@ -1,7 +1,7 @@
 {
-    "api/comments/product/{product_id}": {
+    "/api/comments/product/{product_id}": {
         "post": {
-            "summary": "Create New Comment",
+            "summary": "Create New Comment by product id",
             "tags": [
                 "Comment"
             ],
@@ -30,6 +30,67 @@
                 },
                 "400": {
                     "description": "Validation Error"
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "get": {
+            "summary": "Get All comments by product by product id",
+            "tags": [
+                "Comment"
+            ],
+            "responses": {
+                "200": {
+                    "description": "Get All Products"
+                },
+                "400": {
+                    "description": "Validation Error"
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/api/comments/{id}": {
+        "patch": {
+            "summary": "Update comment by comment id",
+            "tags": [
+                "comments"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "text"
+                            ],
+                            "properties": {
+                                "text": {
+                                    "type": "string",
+                                    "example": "This is very good product"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Comment Updated Successfully"
+                },
+                "400": {
+                    "description": "Validation Error"
+                },
+                "401": {
+                    "description": "Unauthorized"
+                },
+                "404": {
+                    "description": "Comment Does not exist"
                 },
                 "500": {
                     "description": "Internal Server Error"

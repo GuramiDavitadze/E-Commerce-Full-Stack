@@ -1,0 +1,40 @@
+{
+    "api/comments/product/{product_id}": {
+        "post": {
+            "summary": "Create New Comment",
+            "tags": [
+                "Comment"
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "text"
+                            ],
+                            "properties": {
+                                "text": {
+                                    "type": "string",
+                                    "example": "This is very good product"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Comment created successfully"
+                },
+                "400": {
+                    "description": "Validation Error"
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    }
+}

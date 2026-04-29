@@ -3,7 +3,7 @@
         "post": {
             "summary": "Create New Comment by product id",
             "tags": [
-                "Comment"
+                "Comments"
             ],
             "requestBody": {
                 "required": true,
@@ -39,7 +39,7 @@
         "get": {
             "summary": "Get All comments by product by product id",
             "tags": [
-                "Comment"
+                "Comments"
             ],
             "responses": {
                 "200": {
@@ -58,7 +58,7 @@
         "patch": {
             "summary": "Update comment by comment id",
             "tags": [
-                "comments"
+                "Comments"
             ],
             "requestBody": {
                 "required": true,

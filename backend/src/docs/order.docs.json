@@ -68,8 +68,8 @@
                 "200": {
                     "description": "Get All Orders"
                 },
-                "400": {
-                    "description": "Validation Error"
+                "401": {
+                    "description": "Unauthorized"
                 },
                 "500": {
                     "description": "Internal Server Error"
@@ -78,22 +78,49 @@
         }
     },
     "/api/orders/admin": {
-        "summary": "All Orders of all users",
-        "tags": [
-            "Orders"
-        ],
-        "responses": {
-            "200": {
-                "description": "Get All Orders"
-            },
-            "400": {
-                "description": "Validation Error"
-            },
-            "403":{
-                "description":"Access Denided"
-            },
-            "500": {
-                "description": "Internal Server Error"
+        "get": {
+            "summary": "All Orders of all users",
+            "tags": [
+                "Orders"
+            ],
+            "responses": {
+                "200": {
+                    "description": "Get All Orders"
+                },
+                "401": {
+                    "description": "Unauthorized"
+                },
+                "403": {
+                    "description": "Access Denided"
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/api/orders/{id}/status": {
+        "patch": {
+            "summary": "Update Order Status",
+            "tags": [
+                "Orders"
+            ],
+            "responses": {
+                "200": {
+                    "description": "Updated order status"
+                },
+                "400": {
+                    "description": "Already Delivered"
+                },
+                "401": {
+                    "description": "Unauthorized"
+                },
+                "403": {
+                    "description": "Access Denided"
+                },
+                "500": {
+                    "description": "Internal Server Error"
+                }
             }
         }
     }
